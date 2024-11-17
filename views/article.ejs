@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Management</title>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+   
+
+ 
+
+    .portfolio-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .portfolio-item h3 {
+      margin-top: 0;
+    }
+
+    button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+   
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .form-container {
+      margin-bottom: 2rem;
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      <a href="/portfolio">Portfolio</a>
+      <a href="/auth/login">Login</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="article-images">
+        <div class="swiper-container">
+            <div class="swiper-wrapper article-images"></div>
+            <!-- Добавьте элементы управления -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <h1 class="title">Manage Portfolio</h1>
+    <p class="date"></p>
+    <p class="description"></p>
+    </div>
+     <footer>
+    <p>Created by Darina Nazarbekova BDA-2303</p>
+        </footer>
+
+  <script>
+    // Загрузка элементов портфолио при загрузке страницы
+    document.addEventListener('DOMContentLoaded', async () => {
+        const articleId = window.location.pathname.split('/').pop();
+        const articleImagesWrapper = document.querySelector('.swiper-wrapper');
+        const articleTitle = document.querySelector('.title');
+        const articleDescription = document.querySelector('.description');
+        const articleDate = document.querySelector('.date');
+        try{
+            const response=await fetch("/portfolio/article/"+articleId);
+            const portfolio=await response.json()
+            const article=portfolio.portfolio
+            console.log(article)
+            articleTitle.textContent=article.title;
+            articleDescription.textContent=article.description;
+            articleDate.textContent=article.createdAt;
+            article.images.forEach(image => {
+            const swiperSlide = document.createElement('div');
+            swiperSlide.classList.add('swiper-slide');
+            const imgElement = document.createElement('img');
+            imgElement.src = `/${image}`;
+            imgElement.alt = article.title;
+            swiperSlide.appendChild(imgElement);
+            articleImagesWrapper.appendChild(swiperSlide);
+            new Swiper('.swiper-container', {
+            loop: true,
+            centeredSlides: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+        });
+        }catch(error){
+            alert(error)
+        }
+    })
+  </script>
+</body>
+</html>

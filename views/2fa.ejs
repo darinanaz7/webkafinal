@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2FA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .portfolio-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .portfolio-item h3 {
+      margin-top: 0;
+    }
+
+    button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .form-container {
+      margin-bottom: 2rem;
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      <a href="/portfolio">Portfolio</a>
+      <a href="/auth/login">Login</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="qr"></div>
+    <form method="POST" action="/auth/2fa/verify">
+        <input id="token" name="token">
+        <button type="submit">Verify</button>
+
+    </form>
+
+
+    
+  </div>
+
+  <footer>
+    <p>Created by Darina Nazarbekova BDA-2303</p>
+  </footer>
+
+  <script>
+    // Загрузка элементов портфолио при загрузке страницы
+    document.addEventListener('DOMContentLoaded', async () => {
+        try{
+            const response=await fetch("/auth/2fa/setup");
+        const data=await response.json();
+        console.log (data)
+        const image=document.createElement("img");
+        image.src=data.qrCode;
+        document.querySelector(".qr").appendChild(image);
+        } catch(error){
+            alert(error)
+        }
+
+      })
+  </script>
+</body>
+</html>

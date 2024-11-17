@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Project</title>
+  <style>
+    /* Общие стили */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Карусель */
+    .carousel {
+      display: flex;
+      overflow-x: auto; /* Включаем прокрутку по горизонтали */
+      scroll-snap-type: x mandatory; /* Стилизуем элементы для скроллинга */
+      gap: 1rem; /* Задаем отступы между картинками */
+    }
+
+    .carousel img {
+      width: 100%; /* Картинки должны занимать всю доступную ширину */
+      max-width: 400px; /* Максимальная ширина картинок */
+      height: auto; /* Пропорциональная высота */
+      border-radius: 8px;
+      scroll-snap-align: center; /* Центрируем изображения при прокрутке */
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      <a href="/portfolio">Portfolio</a>
+      <a href="/auth/login">Login</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Welcome to the Portfolio Project</h1>
+    <p>This is a simple project showcasing role-based access control, CRUD operations, and more.</p>
+
+    <!-- Карусель -->
+    <div class="carousel">
+      <img src="https://media.istockphoto.com/id/1394701218/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%86%D0%B8%D1%8F-%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B-%D0%BD%D0%B0%D0%B9%D1%82%D0%B8-%D1%81%D0%B2%D0%BE%D1%8E-%D0%BA%D0%B0%D1%80%D1%8C%D0%B5%D1%80%D1%83-%D0%B6%D0%B5%D0%BD%D1%89%D0%B8%D0%BD%D0%B0-%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B8%D1%82-%D0%BD%D0%B0-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D1%81%D0%B0%D0%B9%D1%82-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA%D0%B0.jpg?s=612x612&w=0&k=20&c=0lmvhgMRDzrlY5GfOJd_4ViW1KjuLa-6kftLI5mrm9U=" alt="Image 1">
+      <img src="https://www.kadrof.ru/sites/default/files/illustrations/portfolio.jpg" alt="Image 2">
+      <img src="https://media.istockphoto.com/id/1339729895/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%B4%D0%B5%D0%B2%D1%83%D1%88%D0%BA%D0%B0-%D1%81%D0%B8%D0%B4%D0%B8%D1%82-%D0%BD%D0%B0-%D0%BA%D1%80%D0%B5%D1%81%D0%BB%D0%B5-%D1%81%D1%82%D0%B0%D0%B2%D1%8F-%D0%BD%D0%BE%D0%B3%D0%B8-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%B4%D0%BE%D0%BA%D0%BE%D0%BD%D0%BD%D0%B8%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D0%BD%D0%B0-%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA%D0%B5-%D0%B4%D0%BE%D0%BC%D0%B0-%D0%BA%D0%BE%D1%88%D0%BA%D0%B0-%D1%80%D1%8F%D0%B4%D0%BE%D0%BC-%D1%85%D0%BE%D1%87%D0%B5%D1%82.jpg?s=612x612&w=0&k=20&c=_60r_xauQZTjMqqKgGj7Y11FntBulvSAvyJjnHicKAg=" alt="Image 3">
+    </div>
+  </div>
+
+  <footer>
+    <p>Created by Darina Nazarbekova BDA-2303</p>
+  </footer>
+</body>
+</html>

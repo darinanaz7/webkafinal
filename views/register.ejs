@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #218838;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Register</h2>
+
+    <!-- Display error message -->
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <form action="/auth/register" method="POST">
+      <label for="username">Username or Email:</label>
+      <input type="text" id="username" name="username" required placeholder="Enter your username" />
+      <input type="email" id="email" name="email" required placeholder="Enter your email" />
+      <input type="text" id="firstName" name="firstName" required placeholder="Enter your name" />
+      <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name" />
+      <input type="number" id="age" name="age" placeholder="Enter your age" required max="120" min="0" />
+        <select name="gender" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password" />
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password" />
+      <a href = "/auth/login"> Login </a>
+      <input type="submit" value="Register" />
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Api</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .portfolio-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .portfolio-item h3 {
+      margin-top: 0;
+    }
+
+    button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .form-container {
+      margin-bottom: 2rem;
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      <a href="/portfolio">Portfolio</a>
+      <a href="/auth/login">Login</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Manage Portfolio</h1>
+    
+    <!-- Форма для добавления нового элемента портфолио -->
+    <div class="form-container">
+      <h2>Add New Portfolio Item</h2>
+      <form id="addPortfolioForm">
+        <input type="text" id="title" placeholder="Title" required />
+        <textarea id="description" placeholder="Description" required></textarea>
+        <button type="submit">Add Portfolio Item</button>
+      </form>
+    </div>
+
+    <!-- Список элементов портфолио -->
+    <h2>Portfolio Items</h2>
+    <div id="portfolioItems">
+      <!-- Элементы портфолио будут загружаться сюда -->
+    </div>
+  </div>
+
+  <footer>
+    <p>Created by Darina Nazarbekova BDA-2303</p>
+  </footer>
+
+  <script>
+    // Загрузка элементов портфолио при загрузке страницы
+    document.addEventListener('DOMContentLoaded', async () => {
+      const portfolioItemsContainer = document.getElementById('portfolioItems');
+      const response = await fetch('/portfolio/portfolio');
+      const {items} = await response.json();
+      
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.classList.add('portfolio-item');
+        div.innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <button onclick="deletePortfolioItem('${item._id}')">Delete</button>
+        `;
+        portfolioItemsContainer.appendChild(div);
+      });
+    });
+
+    // Добавление нового элемента портфолио
+    const addPortfolioForm = document.getElementById('addPortfolioForm');
+    addPortfolioForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+
+      const response = await fetch('/portfolio', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, description }),
+      });
+
+      if (response.ok) {
+        const newItem = await response.json();
+        const portfolioItemsContainer = document.getElementById('portfolioItems');
+        const div = document.createElement('div');
+        div.classList.add('portfolio-item');
+        div.innerHTML = `
+          <h3>${newItem.title}</h3>
+          <p>${newItem.description}</p>
+          <button onclick="deletePortfolioItem('${newItem._id}')">Delete</button>
+        `;
+        portfolioItemsContainer.appendChild(div);
+        
+        // Очистить форму
+        addPortfolioForm.reset();
+      }
+    });
+
+    // Удаление элемента портфолио
+    async function deletePortfolioItem(id) {
+      const response = await fetch(`/portfolio/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        const portfolioItemDiv = document.querySelector(`#portfolioItems button[onclick="deletePortfolioItem('${id}')"]`).parentElement;
+        portfolioItemDiv.remove();
+      }
+    }
+  </script>
+</body>
+</html>
